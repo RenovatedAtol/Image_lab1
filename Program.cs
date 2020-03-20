@@ -16,6 +16,20 @@ namespace IMGapp
     {
         static void Main(string[] args)
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+
+            }
+
             using (var img = new Bitmap("..\\..\\in.jpg"))    //открываем картинку     
             {     //блок using используется для корретного высвобождения памяти переменной, которая в нем создается
                   //для типа Bitmap это необходимо.
@@ -72,13 +86,11 @@ namespace IMGapp
                         var p = Pens.Red.Clone() as Pen;  //красная ручка
                         p.Width = 5;        //Так как кисть стандартная, для изменения ее свойств создадим ее копию ф-цией Clone
 
-                        var b = Brushes.Black; //черная кисть
-                        var wh = Brushes.White; //белая кисть
-
-                        g.FillRectangle(wh, 10, 10, 340, 50); //белый прямоугольник
+                        
+                        g.FillRectangle(Brushes.White, 10, 10, 340, 50); //белый прямоугольник
 
                         var f = new Font("Times New Roman", 20, FontStyle.Bold); //шрифт
-                        g.DrawString("Выходное изображение:", f, b, 10, 10);
+                        g.DrawString("Выходное изображение:", f, Brushes.Black, 10, 10);
 
                         g.DrawLine(p, 10, 10, 350, 10); //красная линия     
 
@@ -92,6 +104,8 @@ namespace IMGapp
                                 i, 
                                 h/2 + (int)(50 * Math.Sin(i / 50.0)));
 
+                        p.Dispose();
+                        green_pen.Dispose();
                     }     //вот тут графикс g удаляется методом g.Dispose()     
 
                     var time2 = DateTime.Now;
