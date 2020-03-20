@@ -16,20 +16,6 @@ namespace IMGapp
     {
         static void Main(string[] args)
         {
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-
-            }
-
             using (var img = new Bitmap("..\\..\\in.jpg"))    //открываем картинку     
             {     //блок using используется для корретного высвобождения памяти переменной, которая в нем создается
                   //для типа Bitmap это необходимо.
