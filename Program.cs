@@ -6,6 +6,7 @@ using System.IO;
 /* для подключения System.Drawing в своем проекте правой в проекте нажать правой кнопкой по Ссылкам -> Добавить ссылку
     отметить галочкой сборку System.Drawing    */
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 
 namespace IMGapp
@@ -65,6 +66,9 @@ namespace IMGapp
                     using (var g = Graphics.FromImage(img_out)) //через Using создадим объекет Graphics из нашей выходной картинке
                     {              //Graphics как раз содержит методы для рисования линий, текста и прочих геомиетричсеких примитивов
 
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+
                         var p = Pens.Red.Clone() as Pen;  //красная ручка
                         p.Width = 5;        //Так как кисть стандартная, для изменения ее свойств создадим ее копию ф-цией Clone
 
@@ -78,9 +82,15 @@ namespace IMGapp
 
                         g.DrawLine(p, 10, 10, 350, 10); //красная линия     
 
-                        //В завершении, нарисуем зеленую синусоиду на картинке =)
+                        //В завершении, нарисуем зеленую синусоиду на картинке =)m
+                        var green_pen = Pens.Green.Clone() as Pen;
+                        green_pen.Width = 3;
                         for (int i = 1; i < w; ++i)
-                            g.DrawLine(Pens.Green, (i - 1), 100 + 100 * (int)Math.Sin((i - 1) / 100.0), i, 100 + 100 * (int)Math.Sin(i / 100.0));
+                            g.DrawLine(green_pen, 
+                                (i - 1), 
+                                h/2 + (int)(50 * Math.Sin((i - 1) / 50.0)), 
+                                i, 
+                                h/2 + (int)(50 * Math.Sin(i / 50.0)));
 
                     }     //вот тут графикс g удаляется методом g.Dispose()     
 
