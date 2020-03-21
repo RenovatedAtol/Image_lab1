@@ -78,7 +78,8 @@ namespace IMGapp
                         var f = new Font("Times New Roman", 20, FontStyle.Bold); //шрифт
                         g.DrawString("Выходное изображение:", f, Brushes.Black, 10, 10);
 
-                        g.DrawLine(p, 10, 10, 350, 10); //красная линия     
+                        g.DrawLine(p, 10, 10, 350, 10); //красная линия  
+                        
 
                         //В завершении, нарисуем зеленую синусоиду на картинке =)m
                         var green_pen = Pens.Green.Clone() as Pen;
@@ -90,8 +91,16 @@ namespace IMGapp
                                 i, 
                                 h/2 + (int)(50 * Math.Sin(i / 50.0)));
 
+                        
+                        //нарисуем в нижнем правом углу оригинальное изображение в красной рамочке
+                        g.DrawImage(img,w-100-1,h-100-1,100,100);
+                        g.DrawRectangle(p, w - 100 - 1, h - 100 - 1,100,100);
+                        
+                        //ручками высвобождаем ресурсы
+                        f.Dispose();
                         p.Dispose();
                         green_pen.Dispose();
+
                     }     //вот тут графикс g удаляется методом g.Dispose()     
 
                     var time2 = DateTime.Now;
