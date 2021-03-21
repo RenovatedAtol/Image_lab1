@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 
@@ -32,6 +33,8 @@ namespace IMGapp
                 using (var img_out = new Bitmap(w, h))   //создаем пустое изображение размером с исходное для сохранения результата
                 {
                     var time1 = DateTime.Now;
+                    Stopwatch timer = new Stopwatch();
+                    timer.Start();
 
                     //попиксельно обрабатываем картинку 
                     for (int i = 0; i < h; ++i)
@@ -103,9 +106,10 @@ namespace IMGapp
 
                     }     //вот тут графикс g удаляется методом g.Dispose()     
 
-                    var time2 = DateTime.Now;
-                    Console.WriteLine("Обработал изображение за " + Math.Round((time2-time1).TotalMilliseconds) + " мс.");
-                   
+                    timer.Stop();
+                    
+                    Console.WriteLine("Обработал изображение за " + timer.ElapsedMilliseconds + " мс.");
+
                     //сохраним нашу выходную картинку 
                     img_out.Save("..\\..\\out.jpg");
                     
