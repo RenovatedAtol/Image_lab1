@@ -8,11 +8,11 @@ using System.IO;
     отметить галочкой сборку System.Drawing    */
 using System.Drawing;
 using System.Drawing.Drawing2D;
-
+using System.Runtime.CompilerServices;
+using System.Drawing.Imaging;
 
 namespace IMGapp
 {
-
     class Program
     {
         static void Main(string[] args)
@@ -50,71 +50,81 @@ namespace IMGapp
                             int g = pix.G;
                             int b = pix.B;
 
-                            //Увеличим квет каждого пикселя на 1.4
-                            //При вычислении пикселей используем функию Clamp (см. ниже Main) чтобы цвет не вылезал за границы [0 255]
-                            r = (int)Clamp(r * 1.4, 0, 255);
-                            g = (int)Clamp(g * 1.4, 0, 255);
-                            b = (int)Clamp(b * 1.4, 0, 255);
+                            //lgbt flag
+                            int h_av = h / 6;                            
+                            switch (i / h_av)
+                            {
+                                case (0):
+                                    //red
+                                    r = (int)Clamp(r * 255, 0, 255);
+                                    g = (int)Clamp(g * 0, 0, 255);
+                                    b = (int)Clamp(b * 0, 0, 255);
+                                    break;
+                                case (1):
+                                    //orange
+                                    r = (int)Clamp(r * 128, 0, 255);
+                                    g = (int)Clamp(g * 255, 0, 255);
+                                    b = (int)Clamp(b * 0, 0, 255);
+                                    break;
+                                case (2):
+                                    //yellow
+                                    r = (int)Clamp(r * 255, 0, 255);
+                                    g = (int)Clamp(g * 255, 0, 255);
+                                    b = (int)Clamp(b * 0, 0, 255);
+                                    break;
+                                case (3):
+                                    //green
+                                    r = (int)Clamp(r * 0, 0, 255);
+                                    g = (int)Clamp(g * 255, 0, 255);
+                                    b = (int)Clamp(b * 0, 0, 255);
+                                    break;
+                                case (4):
+                                    //blue
+                                    r = (int)Clamp(r * 0, 0, 255);
+                                    g = (int)Clamp(g * 0, 0, 255);
+                                    b = (int)Clamp(b * 255, 0, 255);
+                                    break;
+                                case (5):
+                                    //purple
+                                    r = (int)Clamp(r * 128, 0, 255);
+                                    g = (int)Clamp(g * 0, 0, 255);
+                                    b = (int)Clamp(b * 255, 0, 255);
+                                    break;
+                            }
+                               
 
+                            //При вычислении пикселей используем функию Clamp (см. ниже Main) чтобы цвет не вылезал за границы [0 255]
 
                             //записываем пиксель в изображение
-                            pix = Color.FromArgb(r, g, b);
+                            pix = Color.FromArgb(120, r, g, b);
                             img_out.SetPixel(j, i, pix);
 
                             //ц-ции GetPixel и SetPixel работают достаточно медленно, надо стримится к минимизации их использования
                         }
                     }
 
-                    //нарисуем что нибудь на картинке
-                    using (var g = Graphics.FromImage(img_out)) //через Using создадим объекет Graphics из нашей выходной картинке
-                    {              //Graphics как раз содержит методы для рисования линий, текста и прочих геомиетричсеких примитивов
-
-                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        g.SmoothingMode = SmoothingMode.HighQuality;
-
-                        var p = Pens.Red.Clone() as Pen;  //красная ручка
-                        p.Width = 5;        //Так как кисть стандартная, для изменения ее свойств создадим ее копию ф-цией Clone
-
-                        
-                        g.FillRectangle(Brushes.White, 10, 10, 340, 50); //белый прямоугольник
-
-                        var f = new Font("Times New Roman", 20, FontStyle.Bold); //шрифт
-                        g.DrawString("Выходное изображение:", f, Brushes.Black, 10, 10);
-
-                        g.DrawLine(p, 10, 10, 350, 10); //красная линия  
-                        
-
-                        //В завершении, нарисуем зеленую синусоиду на картинке =)m
-                        var green_pen = Pens.Green.Clone() as Pen;
-                        green_pen.Width = 3;
-                        for (int i = 1; i < w; ++i)
-                            g.DrawLine(green_pen, 
-                                (i - 1), 
-                                h/2 + (int)(50 * Math.Sin((i - 1) / 50.0)), 
-                                i, 
-                                h/2 + (int)(50 * Math.Sin(i / 50.0)));
-
-                        
-                        //нарисуем в нижнем правом углу оригинальное изображение в красной рамочке
-                        g.DrawImage(img,w-100-1,h-100-1,100,100);
-                        g.DrawRectangle(p, w - 100 - 1, h - 100 - 1,100,100);
-                        
-                        //ручками высвобождаем ресурсы
-                        f.Dispose();
-                        p.Dispose();
-                        green_pen.Dispose();
-
-                    }     //вот тут графикс g удаляется методом g.Dispose()     
+                    
 
                     timer.Stop();
                     
                     Console.WriteLine("Обработал изображение за " + timer.ElapsedMilliseconds + " мс.");
 
                     //сохраним нашу выходную картинку 
-                    img_out.Save("..\\..\\out.jpg");
-                    
-                    
-                    Console.WriteLine("Выходное изображение было сохренено по пути " + Directory.GetParent("..\\..\\") + "\\out.jpg");
+                    img_out.Save("..\\..\\lgbt.jpg");
+
+                    System.Drawing.Image primaryImage = Image.FromFile(@"C:\Users\student\source\repos\Image_lab1\in.jpg");//or resource..
+
+                    using (Graphics graphics = Graphics.FromImage(primaryImage))//get the underlying graphics object from the image.
+                    {
+                        System.Drawing.Image overlayImage = Image.FromFile(@"C:\Users\student\source\repos\Image_lab1\lgbt.jpg");
+                           {
+                            graphics.DrawImage(overlayImage, new Point(0, 0));//this will draw the overlay image over the base image at (0, 0) coordination.
+                           }
+                    }
+                    System.Drawing.Image Control = primaryImage;
+                    Control.Save("C:\\Users\\student\\source\\repos\\Image_lab1\\lgbtpic.png", ImageFormat.Png);
+
+
                     Console.ReadKey();
 
                 } //using (var img_out = new Bitmap(w, h))     вот тут картинка img_out удаляется методом img_out.Dispose()     
