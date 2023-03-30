@@ -51,47 +51,47 @@ namespace IMGapp
                             int b = pix.B;
 
                             //lgbt flag
-                            int h_av = h / 6;                            
+                            int h_av = h / 6;
                             switch (i / h_av)
                             {
                                 case (0):
                                     //red
-                                    r = (int)Clamp(r * 255, 0, 255);
-                                    g = (int)Clamp(g * 0, 0, 255);
-                                    b = (int)Clamp(b * 0, 0, 255);
+                                    r = 255;
+                                    g = 0;
+                                    b = 0;
                                     break;
                                 case (1):
                                     //orange
-                                    r = (int)Clamp(r * 128, 0, 255);
-                                    g = (int)Clamp(g * 255, 0, 255);
-                                    b = (int)Clamp(b * 0, 0, 255);
+                                    r = 255;
+                                    g = 128;
+                                    b = 0;
                                     break;
                                 case (2):
                                     //yellow
-                                    r = (int)Clamp(r * 255, 0, 255);
-                                    g = (int)Clamp(g * 255, 0, 255);
-                                    b = (int)Clamp(b * 0, 0, 255);
+                                    r = 255;
+                                    g = 255;
+                                    b = 0;
                                     break;
                                 case (3):
                                     //green
-                                    r = (int)Clamp(r * 0, 0, 255);
-                                    g = (int)Clamp(g * 255, 0, 255);
-                                    b = (int)Clamp(b * 0, 0, 255);
+                                    r = 0;
+                                    g = 255;
+                                    b = 0;
                                     break;
                                 case (4):
                                     //blue
-                                    r = (int)Clamp(r * 0, 0, 255);
-                                    g = (int)Clamp(g * 0, 0, 255);
-                                    b = (int)Clamp(b * 255, 0, 255);
+                                    r = 0;
+                                    g = 0;
+                                    b = 255;
                                     break;
                                 case (5):
                                     //purple
-                                    r = (int)Clamp(r * 128, 0, 255);
-                                    g = (int)Clamp(g * 0, 0, 255);
-                                    b = (int)Clamp(b * 255, 0, 255);
+                                    r = 75;
+                                    g = 0;
+                                    b = 130;
                                     break;
                             }
-                               
+
 
                             //При вычислении пикселей используем функию Clamp (см. ниже Main) чтобы цвет не вылезал за границы [0 255]
 
@@ -112,17 +112,17 @@ namespace IMGapp
                     //сохраним нашу выходную картинку 
                     img_out.Save("..\\..\\lgbt.jpg");
 
-                    System.Drawing.Image primaryImage = Image.FromFile(@"C:\Users\student\source\repos\Image_lab1\in.jpg");//or resource..
+                    System.Drawing.Image primaryImage = Image.FromFile("..\\..\\in.jpg");//or resource..
 
                     using (Graphics graphics = Graphics.FromImage(primaryImage))//get the underlying graphics object from the image.
                     {
-                        System.Drawing.Image overlayImage = Image.FromFile(@"C:\Users\student\source\repos\Image_lab1\lgbt.jpg");
+                        System.Drawing.Image overlayImage = Image.FromFile("..\\..\\lgbt.jpg");
                            {
                             graphics.DrawImage(overlayImage, new Point(0, 0));//this will draw the overlay image over the base image at (0, 0) coordination.
                            }
                     }
                     System.Drawing.Image Control = primaryImage;
-                    Control.Save("C:\\Users\\student\\source\\repos\\Image_lab1\\lgbtpic.png", ImageFormat.Png);
+                    Control.Save("..\\..\\lgbtpic.png", ImageFormat.Png);
 
 
                     Console.ReadKey();
