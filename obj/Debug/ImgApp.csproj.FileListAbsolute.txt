@@ -1,8 +1,0 @@
-C:\Users\User\Image_lab1\obj\Debug\ImgApp.csproj.AssemblyReference.cache
-C:\Users\User\Image_lab1\obj\Debug\ImgApp.csproj.SuggestedBindingRedirects.cache
-C:\Users\User\Image_lab1\obj\Debug\ImgApp.csproj.CoreCompileInputs.cache
-C:\Users\User\Image_lab1\bin\Debug\ImgApp.exe.config
-C:\Users\User\Image_lab1\bin\Debug\ImgApp.exe
-C:\Users\User\Image_lab1\bin\Debug\ImgApp.pdb
-C:\Users\User\Image_lab1\obj\Debug\ImgApp.exe
-C:\Users\User\Image_lab1\obj\Debug\ImgApp.pdb
